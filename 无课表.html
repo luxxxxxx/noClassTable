@@ -278,6 +278,24 @@
 				return false;
 			}
 		},
+		deleteInArray = function (ele,arry) {
+			var newArray = [];
+			if (arry instanceof Array) {
+				for (x in arry) {
+					if (arry[x] != ele) {
+						newArray.push(arry[x]);
+					}
+				}
+				return newArray;
+			} else {
+				for (x in ele) {
+					if (ele[x] != arry) {
+						newArray.push(ele[x]);
+					} 
+				};
+				return newArray;
+			};
+		},
 		createTag = function (stuName,stuNum) {
 			if (contains(stuNum,globalStuNum)) {
 				alert('学生输入重复 哈哈');
@@ -293,14 +311,24 @@
 				div1.appendChild(div2);
 				div1.appendChild(div3);
 				div1.setAttribute('title',stuNum);
-				div3.onclick = function () {
+				div3.onclick = function () {  //删除
 					nameTagsBox.removeChild(this.parentNode);
-					//...
+					var stuNum = this.parentNode.getAttribute('title'),
+						stuName = this.parentNode.querySelector('.l').innerHTML,
+						allSpan = document.querySelectorAll('.class span'),
+						spanL = allSpan.length;
+					globalStuNum = deleteInArray(stuNum,globalStuNum);
+					console.log(globalStuNum);
+					for (var i = 0; i < spanL; i++) {
+						var THIS = allSpan[i];
+						if (THIS.innerHTML == stuName) {
+							THIS.parentNode.removeChild(THIS);
+						}
+					}
 				};
 				nameTagsBox.appendChild(div1);
 				globalStuNum.push(stuNum);
-			}
-
+			};
 		}
 		ajax = function (obj) {
 			var url = obj.url,
@@ -377,6 +405,8 @@
 				alert('please input the student number');
 			} else if (stuNum.toString().length != 10) {
 				alert('please input a full student number');
+			} else if (contains(stuNum,globalStuNum)) {
+				alert('student number repeat');
 			} else {
 				var data = 'searchKey=' + stuNum;
 				ajax({

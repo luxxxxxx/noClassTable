@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>无课表快捷</title>
+</head>
+<meta charset="utf-8">
+<style type="text/css">
+	* {
+		margin: 0;
+		padding: 0;
+		font-family: 'Arial';
+		box-sizing: border-box;
+	}
+	li {
+		list-style-type: none;
+	}
+	.table {
+		position: relative;
+		width: 1000px;
+		margin: 0 auto;
+	}
+	.days {
+		position: relative;
+		width: 1000px;
+		height: 100px;
+		background: #333;
+	}
+	.classNum {
+		position: absolute;
+		left: -80px;
+		top: 0;
+		width: 80px;
+		height: 100%;
+	}
+	.classNum li {
+		height: 120px;
+		font-weight: border;
+		color: #000;
+		text-align: center;
+		line-height: 120px;
+	}
+	.classNum li:nth-child(1) {
+		height: 100px;
+	}
+	.days li {
+		float: left;
+		width: 20%;
+		height: 100%;
+		text-align: center;
+		line-height: 100px;
+		color: #fff;
+		list-style-type: none;
+	}
+	ul.class {
+		width: 100%;
+		height: 120px;
+		background: lightgreen;
+	}
+	ul.class:nth-child(odd) {
+		background: pink;
+	}
+	ul.class li {
+		width: 100%;
+		height: 100%;
+		text-align: center;
+		line-height: 120px;
+		color: #000;
+		line-height: 20px;
+		border: 1px solid black;
+	}
+	.nameInput {
+		width: 200px;
+		margin: 0 auto;
+		height: 50px;
+	}
+	ul.class li {
+		float: left;
+		width: 20%;
+		height: 100%;
+		box-sizing: border-box;
+		text-align: center;
+	}
+	ul.class li span {
+		display: inline-block;
+		margin-right: 10px;
+		margin-top: 5px;
+		max-width: 60px;
+		margin-left: 0;
+	}
+	ul.class li span:nth-child(odd) {
+		color: red;
+	}
+	ul.class li span:nth-child(even) {
+		color: #00a1d6;
+	}
+	ul.class li span:hover {
+
+	}
+	input {
+		display: inline-block;
+		float: left;
+		margin-top: 5px;
+		width: 100px;
+		height: 23px;
+		border: 1px solid #333;
+		border-radius: 3px;
+		outline: none;
+		text-indent: 5px;
+		font-size: 12px;
+		transition: .2s all linear;
+	}
+	input[type='text']:focus {
+		border-color: #00a1d6;
+	}
+	#confirm {
+		float: left;
+		margin-left: 20px;
+		width: 80px;
+		height: 23px;
+		border-radius: 3px;
+		background: #00a1d6;
+		transition: .2s all linear;
+		border: none;
+		color: #fff;
+		cursor: pointer;
+	}
+	#confrim:hover {
+		background: #fff;
+		color: #00a1d6;
+	}
+	.nameTagsBox {
+		max-width: 1000px;
+		height: 56px;
+		margin: 10px auto;
+		overflow-x: auto;
+		overflow-y: hidden;
+		box-sizing: border-box;
+		padding: 7px;
+		white-space: nowrap;
+	}
+	.nameTagsBox .name {
+		display: inline-block;
+		width: 101px;
+		height: 25px;
+		position: relative;
+		border-radius: 2px;
+		border: 1px solid #00a1d6;
+		cursor: default;
+		margin-right: 20px;
+	}
+	.nameTagsBox .name .l {
+		width: 75px;
+		height: 100%;
+		float: left;
+		line-height: 25px;
+		color: #333;
+		text-align: center;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+	.nameTagsBox .name .x {
+		width: 23px;
+		float: right;
+		height: 100%;
+		line-height: 25px;
+		text-align: center;
+		color: #000;
+		font-weight: bolder;
+		transition: all .2s ease;
+		cursor: pointer;
+	}
+	.nameTagsBox .name .x:hover {
+		color: red;
+	}
+</style>
+<body>
+
+<div class="nameInput">
+	请在这里输入学生学号
+	<input id="stuNum" type="text" name=""/>
+	<input id="confirm" type="button" name="" value="确认" />
+</div>
+<div class="nameTagsBox">
+	
+</div>
+	<div class="table">
+		<ul class="classNum">
+			<li></li>
+			<li>1-2</li>
+			<li>3-4</li>
+			<li>5-6</li>
+			<li>7-8</li>
+			<li>9-10</li>
+			<li>11-12</li>
+		</ul>
+		<ul class="days">
+			<li>Mon</li>
+			<li>Tue</li>
+			<li>Wed</li>
+			<li>Thu</li>
+			<li>Fri</li>
+		</ul>
+		<ul class="class">
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+		<ul class="class">
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+		<ul class="class">
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+		<ul class="class">
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+		<ul class="class">
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+		<ul class="class">
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+	</div>
+</body>
+</html>
+</script>
+<script type="text/javascript">
+	var classUl = document.querySelectorAll('ul.class'),
+		comfirmBtn = document.querySelector('#confirm'),
+		inputStuNum = document.querySelector('#stuNum'),
+		nameTagsBox = document.querySelector('.nameTagsBox'),
+		body = document.querySelector('body'),
+		stuName,
+		classJson,
+		weekNum = 4,  //第几周
+		stuNumber,  //global
+		globalStuNum = [],
+	    cE = function (dom) {
+			return document.createElement(dom);
+		},
+		contains = function (ele,arr) {
+			if (arr instanceof Array) {  //可以有效的预防参数搞反了
+				var l = arr.length;
+				while(l--) {
+					if (ele == arr[l]) 
+						return true;
+				};
+				return false;
+			} else {
+				var l = ele.length;
+				while(l--) {
+					if (arr == ele[l]) 
+						return true;
+				};
+				return false;
+			}
+		},
+		createTag = function (stuName,stuNum) {
+			if (contains(stuNum,globalStuNum)) {
+				alert('学生输入重复 哈哈');
+			} else {
+				var div1 = cE('div'),
+					div2 = cE('div'),
+					div3 = cE('div');
+				div1.className = 'name';
+				div2.className = 'l';
+				div2.innerHTML = stuName;
+				div3.className = 'x';
+				div3.innerHTML = '×';
+				div1.appendChild(div2);
+				div1.appendChild(div3);
+				div1.setAttribute('title',stuNum);
+				div3.onclick = function () {
+					nameTagsBox.removeChild(this.parentNode);
+					//...
+				};
+				nameTagsBox.appendChild(div1);
+				globalStuNum.push(stuNum);
+			}
+
+		}
+		ajax = function (obj) {
+			var url = obj.url,
+			    method = obj.method || 'get',
+			    asyn = obj.asyn ? true : obj.asyn == false ? false : true,
+			    data = obj.data.toString(),  
+			    xhr = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP'),
+			    success = obj.success || function () {},
+			    error = obj.error;
+			    if (method.toLowerCase() == 'get') 
+			    	url += '?' + data + '&' + new Date().getTime();
+			    xhr.onreadystatechange = function () {
+			    	if (xhr.readyState === 4) {
+				    	if (xhr.status === 200) 
+				    		success && success(xhr.responseText);
+				    	else 
+				    		error && error();
+			    	}
+			    }
+			    xhr.open(method, url, asyn);
+			    xhr.setRequestHeader('content-type' , 'application/x-www-form-urlencoded');
+			    xhr.send(data);
+		},
+		render = function (json) {
+			var l = json.data.length,
+				aClass = json.data,
+				classArray = [];
+			for (var i = 0; i < l; i++) {
+				var dayofweek,
+					THIS = aClass[i];
+				switch (THIS.day)
+				{
+					case '星期一' :
+					dayofweek = 1;
+					break;
+					case '星期二' :
+					dayofweek = 2;
+					break;
+					case '星期三' :
+					dayofweek = 3;
+					break;
+					case '星期四' :
+					dayofweek = 4;
+					break;
+					case '星期五' :
+					dayofweek = 5;
+					break;
+					default :
+					dayofweek = null;   //周六周末不算
+				}
+				var b = {};
+				b.dayofweek = dayofweek;
+				b.lesson = THIS.hash_lesson;
+				b.week = THIS.week;
+				b.className = THIS.course;
+				classArray.push(b);
+			};
+			var l = classArray.length;
+			for (var i = 0; i < l; i++) {
+				var THIS = classArray[i];
+				if (THIS.dayofweek) {
+					if (contains(weekNum,THIS.week)) {
+						var oSpan = document.createElement('span');
+						oSpan.setAttribute('title',THIS.className);
+						oSpan.innerHTML = stuName;
+						classUl[THIS.lesson].querySelectorAll('li')[THIS.dayofweek - 1].appendChild(oSpan)
+					}
+				}	
+			};
+		},
+		submitStuNum = function () {
+			var stuNum = inputStuNum.value;
+			if (stuNum == '') {
+				alert('please input the student number');
+			} else if (stuNum.toString().length != 10) {
+				alert('please input a full student number');
+			} else {
+				var data = 'searchKey=' + stuNum;
+				ajax({
+					'method':'get',
+					'url' : './agency.php',
+					'success' : function (data) {
+						var stuJson = JSON.parse(data);
+						if (stuJson.info != 'ok') {
+							alert('服务器错误!');
+						} else {
+							stuName = stuJson.returnData[0].xm;
+							stuNumber = stuJson.returnData[0].xh;  //global
+							createTag(stuName,stuNumber);
+							ajax ({
+								'method' : 'post',
+								'url' : './classAgency.php',
+								'data' : 'stuNum=' + stuNum,
+								'success' : function (data) {
+									classJson = JSON.parse(data);
+									render(classJson);
+								},
+								'error' : function () {
+									alert('error');
+								}
+							})
+						}
+					},
+					'data' : data, 
+					'error' : function () {
+						alert('error : 请使用服务器环境运行!')
+					}
+				})
+			}
+		};
+		
+	comfirmBtn.addEventListener('click',submitStuNum);
+	inputStuNum.addEventListener('focus',function () {
+		body.onkeypress = function (e) {
+			var e = e || window.event;
+			if (e.keyCode == 13) {
+				console.log('submitStuNum');
+				submitStuNum();
+			}
+		};
+	});
+	inputStuNum.addEventListener('blur',function () {
+		body.onkeypress = null;
+	})
+
+</script>

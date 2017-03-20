@@ -173,6 +173,95 @@
 	.nameTagsBox .name .x:hover {
 		color: red;
 	}
+	.nameInput {
+		position: relative;
+	}
+	.weekSlt {
+		position: absolute;
+		left: 520px;
+		width: 80px;
+		height: 26px;
+		border: 1px solid black;
+		cursor: default;
+		box-sizing: border-box;
+		transition: .22s all linear;
+	}
+	.weekSlt.select {
+		border-bottom: 1px dashed #00a1d6;
+		border-color: #00a1d6;
+	}
+	.weekSlt.select #week {
+		visibility: visible;
+		opacity: 1;
+	}
+	.weekSlt span {
+		display: inline-block;
+		float: left;
+		width: 60px;
+		height: 26px;
+		text-align: center;
+		line-height: 26px;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		white-space: nowrap;
+	}
+	.weekSlt i {
+		display: inline-block;
+		float: left;
+		width: 12px;
+		height: 12px;
+		margin-top: 8px;
+		box-sizing: border-box;
+		border-right: 6px solid transparent;
+		border-left: 6px solid transparent;
+		border-bottom: 6px solid transparent;
+		border-top: 6px solid #00a1d6;
+	} 
+	.weekSlt ul#week {
+		visibility: hidden;
+		opacity: 0;
+		z-index: 10;
+		background: #fff;
+		position: absolute;
+		left: -1px;
+		top: 25px;
+		width: 80px;
+		max-height: 100px;
+		overflow-y: auto;
+		border: 1px solid #00a1d6;
+		border-top: none;
+		transition: .2s all linear;
+	}
+	#week::-webkit-scrollbar {
+	    width: 10px;
+	}
+	#week::-webkit-scrollbar-button {
+		display: none;
+    	background-color: #fff;
+	}
+	#week::-webkit-scrollbar-thumb {
+	    border-radius: 5px;
+	    background-color: #00a1d6;
+	}
+	#week::-webkit-scrollbar-track {
+		width: 5px;
+    	background-color: #fff;
+	}
+	.weekSlt ul#week li {
+		padding-left: 10px;
+		height: 26px;
+		line-height: 26px;
+		box-sizing: border-box;
+		width: 100%;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		transition: .1s all linear;
+	}
+	.weekSlt ul#week li:hover {
+		background: #00a1d6;
+		color: #fff;
+	}
 </style>
 <body>
 
@@ -180,6 +269,29 @@
 	请在这里输入学生学号
 	<input id="stuNum" type="text" name=""/>
 	<input id="confirm" type="button" name="" value="确认" />
+	<div class="weekSlt">
+		<span id="weekNum">周数</span>
+		<i></i>
+		<ul id="week">
+			<li>第1周</li>
+			<li>第2周</li>
+			<li>第3周</li>
+			<li>第4周</li>
+			<li>第5周</li>
+			<li>第6周</li>
+			<li>第7周</li>
+			<li>第8周</li>
+			<li>第9周</li>
+			<li>第10周</li>
+			<li>第11周</li>
+			<li>第12周</li>
+			<li>第13周</li>
+			<li>第14周</li>
+			<li>第15周</li>
+			<li>第16周</li>
+			<li>第17周</li>
+		</ul>
+	</div>
 </div>
 <div class="nameTagsBox">
 	
@@ -252,10 +364,14 @@
 		comfirmBtn = document.querySelector('#confirm'),
 		inputStuNum = document.querySelector('#stuNum'),
 		nameTagsBox = document.querySelector('.nameTagsBox'),
+		weekSlt = document.querySelector('#week'),
 		body = document.querySelector('body'),
+		weekNumSpan = document.querySelector('#weekNum'),  //周数
+		weekLis = document.querySelectorAll('#week li'),
+		weekBtn = document.querySelector('body > div.nameInput > div'), //周数按钮
 		stuName,
 		classJson,
-		weekNum = 4,  //第几周
+		weekNum = null,  //第几周
 		stuNumber,  //global
 		globalStuNum = [],
 	    cE = function (dom) {
@@ -277,6 +393,70 @@
 				};
 				return false;
 			}
+		},
+		addClass = function ( ele , classN ) {
+			if (ele.length == undefined) {
+				if (!hasClass(ele,classN)) {
+					if (ele.className) { //如果dom对象有classname
+						var classArry = ele.className.split(' ');
+						classArry.push(classN); //
+					}else {
+						var classArry = [];
+						classArry.push(classN);
+					}
+				var fixArray = [];  //清除class之间可能存在的多个空格
+				for (var i = 0; i < classArry.length; i++) {
+					if (classArry[i] != '') {
+						fixArray.push(classArry[i])
+					};
+				};
+				ele.className = fixArray.join(' ');
+				};
+			} else {
+				console.log('this i an array;')
+				var l = ele.length;
+				console.log(l)
+				for (var g = 0; g < l; g++) {
+					if (!hasClass(ele[g],classN)) {
+						console.log(ele)
+						if (ele[g].className) { //如果dom对象有classname
+							var classArry = ele[g].className.split(' ');
+							classArry.push(classN); //xxx
+						}else {
+							console.log('ele hasClass')
+							var classArry = [];
+							classArry.push(classN);
+						}
+					var fixArray = [];  //清除class之间可能存在的多个空格
+					for (var i = 0; i < classArry.length; i++) {
+						if (classArry[i] != '') {
+							fixArray.push(classArry[i])
+						};
+					};
+					ele[g].className = fixArray.join(' ');
+					};
+				}
+			}
+		},
+		removeClass = function ( ele , classN ) {
+			if (ele.length == undefined) {
+				if (hasClass(ele,classN)) {
+					var reg = RegExp('\\b' + classN + '\\b');
+					ele.className = ele.className.replace(reg,'')
+				}
+			} else if (ele.length >= 1) {
+				var l = ele.length;
+				for (var i = 0; i < l; i++) {
+					if (hasClass(ele[i],classN)) {
+						var reg = RegExp('\\b' + classN + '\\b');
+						ele[i].className = ele[i].className.replace(reg,'')
+					}
+				}
+			}
+		},
+		hasClass = function ( ele , classN ) {
+			var reg = new RegExp('\\b' + classN + '\\b');
+			return reg.test( ele.className ); 
 		},
 		deleteInArray = function (ele,arry) {
 			var newArray = [];
@@ -323,8 +503,8 @@
 						var THIS = allSpan[i];
 						if (THIS.innerHTML == stuName) {
 							THIS.parentNode.removeChild(THIS);
-						}
-					}
+						};
+					};
 				};
 				nameTagsBox.appendChild(div1);
 				globalStuNum.push(stuNum);
@@ -392,7 +572,7 @@
 				if (THIS.dayofweek) {
 					if (contains(weekNum,THIS.week)) {
 						var oSpan = document.createElement('span');
-						oSpan.setAttribute('title',THIS.className);
+						oSpan.setAttribute('title',THIS.className + '     ' + '第' + weekNum + '周');
 						oSpan.innerHTML = stuName;
 						classUl[THIS.lesson].querySelectorAll('li')[THIS.dayofweek - 1].appendChild(oSpan)
 					}
@@ -408,37 +588,41 @@
 			} else if (contains(stuNum,globalStuNum)) {
 				alert('student number repeat');
 			} else {
-				var data = 'searchKey=' + stuNum;
-				ajax({
-					'method':'get',
-					'url' : './agency.php',
-					'success' : function (data) {
-						var stuJson = JSON.parse(data);
-						if (stuJson.info != 'ok') {
-							alert('服务器错误!');
-						} else {
-							stuName = stuJson.returnData[0].xm;
-							stuNumber = stuJson.returnData[0].xh;  //global
-							createTag(stuName,stuNumber);
-							ajax ({
-								'method' : 'post',
-								'url' : './classAgency.php',
-								'data' : 'stuNum=' + stuNum,
-								'success' : function (data) {
-									classJson = JSON.parse(data);
-									render(classJson);
-								},
-								'error' : function () {
-									alert('error');
-								}
-							})
+				if (!weekNum) {
+					alert('请选择周数');
+				} else {
+					var data = 'searchKey=' + stuNum;
+					ajax({
+						'method':'get',
+						'url' : './agency.php',
+						'success' : function (data) {
+							var stuJson = JSON.parse(data);
+							if (stuJson.info != 'ok') {
+								alert('服务器错误!');
+							} else {
+								stuName = stuJson.returnData[0].xm;
+								stuNumber = stuJson.returnData[0].xh;  //global
+								createTag(stuName,stuNumber);
+								ajax ({
+									'method' : 'post',
+									'url' : './classAgency.php',
+									'data' : 'stuNum=' + stuNum,
+									'success' : function (data) {
+										classJson = JSON.parse(data);
+										render(classJson);
+									},
+									'error' : function () {
+										alert('error');
+									}
+								})
+							}
+						},
+						'data' : data, 
+						'error' : function () {
+							alert('error : 请使用服务器环境运行!')
 						}
-					},
-					'data' : data, 
-					'error' : function () {
-						alert('error : 请使用服务器环境运行!')
-					}
-				})
+					})
+				};
 			}
 		};
 		
@@ -452,6 +636,20 @@
 			}
 		};
 	});
+	weekBtn.onclick = function () {
+		if (hasClass(this,'select')) 
+			removeClass(this,'select')
+		else 
+			addClass(this,'select')
+	}
+	for (var i = 0; i < weekLis.length; i++) {
+		var This = weekLis[i];
+		This.index = i;
+		This.onclick = function () {
+			weekNumSpan.innerHTML = "第" + (this.index + 1) + "周";
+			weekNum = this.index + 1;
+		};
+	};
 	inputStuNum.addEventListener('blur',function () {
 		body.onkeypress = null;
 	})

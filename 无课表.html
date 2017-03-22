@@ -596,25 +596,29 @@
 						'method':'get',
 						'url' : './agency.php',
 						'success' : function (data) {
-							var stuJson = JSON.parse(data);
-							if (stuJson.info != 'ok') {
-								alert('服务器错误!');
+							if (data.indexOf('<') != -1) {
+								alert('请在内网环境运行');
 							} else {
-								stuName = stuJson.returnData[0].xm;
-								stuNumber = stuJson.returnData[0].xh;  //global
-								createTag(stuName,stuNumber);
-								ajax ({
-									'method' : 'post',
-									'url' : './classAgency.php',
-									'data' : 'stuNum=' + stuNum,
-									'success' : function (data) {
-										classJson = JSON.parse(data);
-										render(classJson);
-									},
-									'error' : function () {
-										alert('error');
-									}
-								})
+								var stuJson = JSON.parse(data);
+								if (stuJson.info != 'ok') {
+									alert('服务器错误!');
+								} else {
+									stuName = stuJson.returnData[0].xm;
+									stuNumber = stuJson.returnData[0].xh;  //global
+									createTag(stuName,stuNumber);
+									ajax ({
+										'method' : 'post',
+										'url' : './classAgency.php',
+										'data' : 'stuNum=' + stuNum,
+										'success' : function (data) {
+											classJson = JSON.parse(data);
+											render(classJson);
+										},
+										'error' : function () {
+											alert('error');
+										}
+									})
+								}
 							}
 						},
 						'data' : data, 
